@@ -1,6 +1,6 @@
 {
   "name": "pi-smart-fetch",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "type": "module",
   "description": "pi.dev smart fetch extension with browser-grade TLS fingerprinting and Defuddle extraction.",
   "license": "MIT",
@@ -60,7 +60,7 @@
     "@mariozechner/pi-tui": "^0.66.1",
     "@sinclair/typebox": "^0.34.49",
     "@thinkscape/wreq-js": "2.2.5",
-    "defuddle": "^0.14.0",
+    "defuddle": "^0.16.0",
     "linkedom": "^0.18.12"
   },
   "peerDependencies": {

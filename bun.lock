@@ -10,17 +10,18 @@
         "@types/bun": "^1.3.11",
         "@types/lodash": "^4.17.24",
         "@types/mime-types": "^3.0.1",
+        "defuddle": "^0.16.0",
         "tsup": "^8.5.1",
         "typescript": "^6.0.2",
       },
     },
     "packages/core": {
       "name": "smart-fetch-core",
-      "version": "0.2.12",
+      "version": "0.2.14",
       "dependencies": {
         "@sinclair/typebox": "^0.34.49",
         "@thinkscape/wreq-js": "2.2.5",
-        "defuddle": "^0.14.0",
+        "defuddle": "^0.16.0",
         "linkedom": "^0.18.12",
         "lodash": "^4.17.21",
         "mime-types": "^2.1.35",
@@ -28,22 +29,22 @@
     },
     "packages/openclaw-smart-fetch": {
       "name": "openclaw-smart-fetch",
-      "version": "0.2.12",
+      "version": "0.2.14",
       "dependencies": {
         "@sinclair/typebox": "^0.34.49",
         "@thinkscape/wreq-js": "2.2.5",
-        "defuddle": "^0.14.0",
+        "defuddle": "^0.16.0",
         "linkedom": "^0.18.12",
       },
     },
     "packages/pi-smart-fetch": {
       "name": "pi-smart-fetch",
-      "version": "0.2.12",
+      "version": "0.2.14",
       "dependencies": {
         "@mariozechner/pi-tui": "^0.66.1",
         "@sinclair/typebox": "^0.34.49",
         "@thinkscape/wreq-js": "2.2.5",
-        "defuddle": "^0.14.0",
+        "defuddle": "^0.16.0",
         "linkedom": "^0.18.12",
       },
       "peerDependencies": {
@@ -494,7 +495,7 @@
 
     "debug": ["debug@4.4.3", "", { "dependencies": { "ms": "^2.1.3" } }, "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA=="],
 
-    "defuddle": ["defuddle@0.14.0", "", { "dependencies": { "commander": "^12.1.0" }, "optionalDependencies": { "linkedom": "^0.18.12", "mathml-to-latex": "^1.5.0", "temml": "^0.13.1", "turndown": "^7.2.0" }, "bin": { "defuddle": "dist/cli.js" } }, "sha512-btavZGd1WgiVqrVM62WGRXMUi/aU7ckTZiq0xXWLZMHvzIqNZjwIFQEDRx8MarD7fIgsB90NXZ9xHJkKtapt2Q=="],
+    "defuddle": ["defuddle@0.16.0", "", { "dependencies": { "commander": "^12.1.0" }, "optionalDependencies": { "linkedom": "^0.18.12", "mathml-to-latex": "^1.5.0", "temml": "^0.13.1", "turndown": "^7.2.0" }, "bin": { "defuddle": "dist/cli.js" } }, "sha512-8Y87EivlIqzxFsULUQLnch29oPeBxMk3yvX2W+8HeZdgxHXeoQINTZD24jfRCQE7n5ui08WWHVipr9xh5MI2TQ=="],
 
     "degenerator": ["degenerator@5.0.1", "", { "dependencies": { "ast-types": "^0.13.4", "escodegen": "^2.1.0", "esprima": "^4.0.1" } }, "sha512-TllpMR/t0M5sqCXfj85i4XaAzxmS5tVA16dqvdkMwGmzI+dXLXnw3J+3Vdv7VKw+ThlTMboK6i9rnZ6Nntj5CQ=="],
 
