@@ -2,7 +2,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { getProfiles } from "@thinkscape/wreq-js";
+import { getProfiles } from "wreq-js";
 
 const profiles = getProfiles();
 const chromes = profiles.filter((p: string) => p.startsWith("chrome_")).sort();

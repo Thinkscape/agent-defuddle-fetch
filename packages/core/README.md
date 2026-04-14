@@ -4,7 +4,7 @@ Internal shared core for the `pi-smart-fetch` and `openclaw-smart-fetch` package
 
 It contains the reusable fetch/extract pipeline, shared request schema helpers, shared batch fan-out helpers, bounded-concurrency scheduling, and shared response formatting.
 
-The core now targets Thinkscape's maintained `@thinkscape/wreq-js` fork, which preserves the upstream fetch/session API shape while adding room for richer request diagnostics and transport-phase progress.
+The core uses the upstream `wreq-js` package for browser-grade TLS fingerprinting via Rust native bindings.
 
 ## Shared capabilities
 

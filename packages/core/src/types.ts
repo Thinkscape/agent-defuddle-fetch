@@ -132,18 +132,39 @@ export interface ExtractedContent {
   extractorType?: string;
 }
 
+/**
+ * Minimal subset of ReadableStreamDefaultReader used by this package.
+ * Avoids coupling to a specific ReadableStream global (DOM vs node:stream/web)
+ * which have incompatible BYOB-reader overloads.
+ */
+export interface BodyStreamReader<T> {
+  read(): Promise<{ done: boolean; value?: T }>;
+  cancel(reason?: string): Promise<void>;
+  releaseLock(): void;
+}
+
+/**
+ * Minimal subset of ReadableStream used by this package.
+ * Structurally compatible with both the DOM global ReadableStream and
+ * Node's `node:stream/web`.ReadableStream — no double-cast needed.
+ */
+export interface ReadableBodyStream<T> {
+  getReader(): BodyStreamReader<T>;
+  readonly locked: boolean;
+}
+
 export interface FetchResponseLike {
   ok: boolean;
   status: number;
   statusText: string;
-  url?: string;
+  url: string;
   headers: {
     get(name: string): string | null;
   };
-  body?: ReadableStream<Uint8Array> | null;
+  body: ReadableBodyStream<Uint8Array> | null;
   text(): Promise<string>;
-  arrayBuffer?(): Promise<ArrayBuffer>;
-  readable?(): NodeJS.ReadableStream;
+  arrayBuffer(): Promise<ArrayBuffer>;
+  readable(): NodeJS.ReadableStream;
 }
 
 export interface FetchDependencies {

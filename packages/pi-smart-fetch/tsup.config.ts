@@ -13,7 +13,7 @@ export default defineConfig({
   external: [
     "@mariozechner/pi-coding-agent",
     "@sinclair/typebox",
-    "@thinkscape/wreq-js",
+    "wreq-js",
     "defuddle",
     "linkedom",
   ],

@@ -54,7 +54,7 @@ function createResponse({
         binary.byteOffset,
         binary.byteOffset + binary.byteLength,
       ) as ArrayBuffer,
-    body: responseBody,
+    body: responseBody ?? null,
     readable: () => Readable.from([binary]),
     ...overrides,
   };

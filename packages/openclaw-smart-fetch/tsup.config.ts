@@ -10,10 +10,5 @@ export default defineConfig({
   noExternal: ["smart-fetch-core"],
   splitting: false,
   treeshake: true,
-  external: [
-    "@sinclair/typebox",
-    "@thinkscape/wreq-js",
-    "defuddle",
-    "linkedom",
-  ],
+  external: ["@sinclair/typebox", "wreq-js", "defuddle", "linkedom"],
 });
