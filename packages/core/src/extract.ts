@@ -1216,33 +1216,14 @@ export function createDefuddleFetch(
       const fallbackDocument = parseLinkedomHTML(rawBody, finalUrl);
       const extractionDocument = parseLinkedomHTML(rawBody, finalUrl);
 
-      // Detect X/Twitter "JS disabled" shell pages early — these indicate the
-      // tweet no longer exists (deleted/protected/suspended). The oEmbed API
-      // returns 404 for the same URL, so we surface that as the error instead of
-      // returning the JS-disabled boilerplate as "content".
-      if (isTwitterJsDisabledPage(fallbackDocument, opts.url)) {
-        return {
-          error: `Server returned HTTP 404 Not Found for ${opts.url}.`,
-          code: "http_error",
-          phase: "loading",
-          retryable: false,
-          timeoutMs,
-          url: opts.url,
-          finalUrl,
-          statusCode: 404,
-          statusText: "Not Found",
-          mimeType: normalizeContentType(contentType) || undefined,
-          contentLength: errorContext.contentLength,
-        };
-      }
-
       let extracted: Awaited<ReturnType<typeof dependencies.defuddle>>;
+      const suppressedErrors: unknown[][] = [];
       try {
         // Defuddle's async extractors (e.g. X oEmbed) can throw on 404 and
         // log a noisy "Error in async extraction" via console.error. Suppress
         // that spam by intercepting console.error during the defuddle call.
+        // We also capture the suppressed errors for later analysis.
         const origConsoleError = console.error;
-        const suppressedErrors: unknown[] = [];
         console.error = (...args: unknown[]) => {
           suppressedErrors.push(args);
         };
@@ -1264,6 +1245,44 @@ export function createDefuddleFetch(
           content: undefined,
           wordCount: 0,
         } as Awaited<ReturnType<typeof dependencies.defuddle>>;
+      }
+
+      // Detect X/Twitter deleted/protected tweets using two signals:
+      // 1. Defuddle's oEmbed extractor failed with a 404 (captured from
+      //    suppressed console.error)
+      // 2. The page is an X/Twitter "JS disabled" shell (DOM detection)
+      // When either signal fires on an x.com/twitter.com URL, surface a
+      // proper 404 instead of the JS-disabled boilerplate as "content".
+      const isXUrl = /^https?:\/\/(www\.)?(x\.com|twitter\.com)\//i.test(
+        opts.url,
+      );
+      if (isXUrl) {
+        const hasOembed404 = suppressedErrors.some((args) =>
+          args.some(
+            (arg) =>
+              typeof arg === "string" &&
+              arg.includes("oEmbed request failed: 404"),
+          ),
+        );
+        const hasJsDisabledShell = isTwitterJsDisabledPage(
+          fallbackDocument,
+          opts.url,
+        );
+        if (hasOembed404 || hasJsDisabledShell) {
+          return {
+            error: `Server returned HTTP 404 Not Found for ${opts.url}.`,
+            code: "http_error",
+            phase: "loading",
+            retryable: false,
+            timeoutMs,
+            url: opts.url,
+            finalUrl,
+            statusCode: 404,
+            statusText: "Not Found",
+            mimeType: normalizeContentType(contentType) || undefined,
+            contentLength: errorContext.contentLength,
+          };
+        }
       }
 
       let extractedContent = extracted.content;
